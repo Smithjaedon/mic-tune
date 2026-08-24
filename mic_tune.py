@@ -226,7 +226,17 @@ def print_obs_settings(noise_gate, compressor, eq, noise_db, voice_db):
     print(f"{'─'*60}")
     
     # Also output as JSON for easy copy
-    settings = {
+    def to_python(obj):
+        """Recursively convert numpy types to native Python types."""
+        if isinstance(obj, dict):
+            return {k: to_python(v) for k, v in obj.items()}
+        elif isinstance(obj, list):
+            return [to_python(v) for v in obj]
+        elif isinstance(obj, (np.floating, np.integer)):
+            return float(obj) if isinstance(obj, np.floating) else int(obj)
+        return obj
+
+    settings = to_python({
         'noise_gate': noise_gate,
         'compressor': compressor,
         'eq': eq,
@@ -235,9 +245,11 @@ def print_obs_settings(noise_gate, compressor, eq, noise_db, voice_db):
             'voice_level_db': round(voice_db, 1),
             'dynamic_range_db': round(voice_db - noise_db, 1)
         }
-    }
-    
-    json_path = '/Users/jaedonsmith/coding/mic-tune/obs_settings.json'
+    })
+
+    import os
+    script_dir = os.path.dirname(os.path.abspath(__file__))
+    json_path = os.path.join(script_dir, 'obs_settings.json')
     with open(json_path, 'w') as f:
         json.dump(settings, f, indent=2)
     print(f"\n  Settings also saved to: {json_path}")
