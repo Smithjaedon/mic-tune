@@ -1,6 +1,6 @@
 # mic-tune
 
-Auto-adjusts OBS audio filter settings for your mic. Records room noise and your voice, analyzes the spectrum, and outputs optimized OBS filter settings.
+Measures your room noise and voice, then outputs tuned OBS filter settings for your mic.
 
 ## Install
 
@@ -14,16 +14,16 @@ pip install sounddevice numpy scipy
 python3 mic_tune.py
 ```
 
-1. Make sure your mic is plugged in and selected as the default input device
+1. Set your mic as the default input device
 2. Stay quiet for 5 seconds (records room noise)
 3. Talk naturally for 10 seconds
 4. Get optimized OBS filter settings
 
 ## What it calculates
 
-- **Noise Gate** — thresholds based on your actual noise floor
-- **Compressor** — ratio and threshold based on your dynamic range
-- **Equalizer** — frequency cuts where your room resonates, boosts for voice clarity
+- **Noise Gate.** Thresholds based on your actual noise floor
+- **Compressor.** Ratio and threshold based on your dynamic range
+- **Equalizer.** Cuts where your room resonates, boosts for voice clarity
 
 ## OBS Setup
 
@@ -35,7 +35,7 @@ Add these filters in order (top to bottom):
 
 ## Windows
 
-Works on Windows too. Just make sure your mic is set as the default recording device in Windows Sound Settings.
+Works on Windows too. Set your mic as the default recording device in Windows Sound Settings.
 
 ```bash
 pip install sounddevice numpy scipy
